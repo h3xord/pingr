@@ -37,8 +37,9 @@
 
 <!-- Add your screenshots to the screenshots/ folder and uncomment/verify the filenames below -->
 <p align="center">
-  <img src="screenshots/home.png" alt="Home Screen" width="240" />
+  <img src="screenshots/IUMS.png" alt="Home Screen" width="240" />
   &nbsp;&nbsp;
+  <img src="screenshots/Notices.png" alt="Home Screen" width="240" />
 </p>
 
 ---
