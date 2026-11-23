@@ -37,9 +37,8 @@
 
 <!-- Add your screenshots to the screenshots/ folder and uncomment/verify the filenames below -->
 <p align="center">
-  <img src="screenshots/IUMS.png" alt="Home Screen" width="240" />
+  <img src="screenshots/home.png" alt="Home Screen" width="240" />
   &nbsp;&nbsp;
-  <img src="screenshots/Notices.png" alt="Home Screen" width="240" />
 </p>
 
 ---
@@ -47,6 +46,7 @@
 ## Quick Start
 
 1. Download **`Pingr-vX.Y.Z.apk`** from the [**Latest Release**](https://github.com/h3xord/Pingr/releases/latest) page and install it on your Android phone (Android 8.0 or higher).
+   - *On Android 17+ or if direct APK installation is blocked? Follow the step-by-step [**ADB / Platform Tools install guide**](MANUAL.md#install-via-adb--platform-tools-android-17-or-blocked-sideloading).*
 2. Open **Pingr** and tap the **Settings** gear icon in the top-right corner.
 3. *(For IUMS Grades)* Enter your **Student / User ID**, **Password**, and **Semester ID** (tap the **`?`** button next to Semester ID for the built-in helper).
 4. Set your preferred **Polling Intervals** for **IUMS** and **Notices** (minimum `15` minutes).

@@ -13,22 +13,77 @@ Complete guide for installing, configuring, and troubleshooting **Pingr** on And
 ### Optional: Verify SHA-256 Checksum
 Compare the downloaded APK against the `.sha256` file from the same release:
 
-- **Windows (PowerShell)**:
-  ```powershell
-  Get-FileHash .\Pingr-v2.0.0.apk -Algorithm SHA256
-  Get-Content .\Pingr-v2.0.0.apk.sha256
+- **Windows (Command Prompt)**:
+  ```cmd
+  certutil -hashfile Pingr-v2.0.0.apk SHA256
+  type Pingr-v2.0.0.apk.sha256
   ```
 - **macOS / Linux**:
   ```bash
   sha256sum -c Pingr-v2.0.0.apk.sha256
   ```
 
-### Install on Android
+### Install on Android (Standard)
 1. Open the downloaded `.apk` file on your phone.
 2. If prompted, allow **Install unknown apps** for your browser or file manager.
 3. Tap **Install**.
 
 > **Updating from v1.0.0**: Official releases are signed with the same release key, so you can install `Pingr-v2.0.0.apk` directly over `v1.0.0` without uninstalling or losing your saved credentials and cached courses.
+
+### Install via ADB / Platform Tools (Android 17+ or Blocked Sideloading)
+
+If your device blocks direct APK installation (such as on **Android 17+** or restricted sideloading devices), you can install or update Pingr cleanly from a PC/Mac using Google's official **Android SDK Platform Tools (`adb`)**:
+
+#### Step 1 — Download Platform Tools on Your Computer
+1. Download the official **SDK Platform-Tools** zip from Google:  
+   https://developer.android.com/tools/releases/platform-tools
+2. Extract the zip file to an easy-to-find folder (for example, `C:\platform-tools` on Windows or `~/platform-tools` on macOS/Linux).
+3. Copy the downloaded `Pingr-v2.0.0.apk` into that same `platform-tools` folder (this keeps the command short).
+
+#### Step 2 — Enable USB Debugging on Your Phone
+1. Open **Settings → About phone** (on some phones: **About phone → Software information**).
+2. Tap **Build number** (on Xiaomi/MIUI/HyperOS: tap **OS version / MIUI version**) **7 times** until it says *"You are now a developer!"*.
+3. Go back to **Settings → System → Developer options** (or **Settings → Additional settings → Developer options** on Xiaomi/Oppo/Realme).
+4. Enable **USB debugging**.
+5. *(Xiaomi / Redmi / POCO only)* Also enable **Install via USB** (and **USB debugging (Security settings)** if present) inside Developer options.
+
+#### Step 3 — Connect Your Phone and Verify ADB
+1. Connect your phone to your computer with a **data-capable USB cable** (switch the USB notification on your phone to **File transfer** if needed).
+2. Open a terminal inside your `platform-tools` folder:
+   - **Windows**: Open the `platform-tools` folder in File Explorer, click the address bar, type `cmd`, and press **Enter**.
+   - **macOS / Linux**: Open Terminal and run `cd ~/platform-tools`.
+3. Check that your phone is detected:
+   - **Windows (Command Prompt)**:
+     ```cmd
+     adb devices
+     ```
+   - **macOS / Linux**:
+     ```bash
+     ./adb devices
+     ```
+4. Look at your phone screen and tap **Allow** (optionally check *"Always allow from this computer"*) on the **Allow USB debugging?** prompt.
+5. Run the `devices` command again — you should see your device ID followed by `device` (not `unauthorized`).
+
+#### Step 4 — Install (or Update) Pingr
+Run the install command from the same terminal:
+
+- **Windows (Command Prompt)**:
+  ```cmd
+  adb install -r Pingr-v2.0.0.apk
+  ```
+- **macOS / Linux**:
+  ```bash
+  ./adb install -r Pingr-v2.0.0.apk
+  ```
+
+- The `-r` flag **replaces/updates** an existing Pingr installation while keeping all your saved credentials, settings, and cached data intact. It also works for a fresh install.
+- When you see `Success`, Pingr is installed and ready on your phone (you can safely unplug the USB cable).
+
+#### Common ADB Troubleshooting
+- **`adb devices` shows nothing:** Try a different USB port or a different cable (many charging cables do not carry data), and make sure **USB debugging** is turned on. On Windows, you may need your phone manufacturer's USB driver (or Google USB Driver for Pixel).
+- **`unauthorized` next to device ID:** Unlock your phone screen, unplug and reconnect the USB cable, and tap **Allow** on the USB debugging popup.
+- **`INSTALL_FAILED_USER_RESTRICTED` (Xiaomi / MIUI / HyperOS):** Enable **Install via USB** in Developer options (requires being signed into a Mi Account on some MIUI/HyperOS builds).
+- **`INSTALL_FAILED_UPDATE_INCOMPATIBLE`:** This happens if you previously installed an unofficial/debug APK signed with a different key. Uninstall the old debug build first, then run the `adb install` command again.
 
 ---
 
